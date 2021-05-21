@@ -1,0 +1,45 @@
+version: '3.9'
+
+networks:
+  intern:
+    external: false
+
+services:
+  web:
+    build: .
+    container_name: landing_page
+    env_file:
+      - ./.env
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - intern
+
+  db:
+    image: "postgres:latest"
+    container_name: myapp_db
+    environment:
+      POSTGRES_PASSWORD: mypassword
+    networks:
+      - intern
+    volumes:
+      - pgdb:/var/lib/postgresql/data
+
+  nginx:
+      image: nginx:1.19-alpine
+      container_name: myapp_nginx
+      volumes:
+      - ./staticfiles:/home/app/staticfiles
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      depends_on:
+      - web
+      networks:
+      - intern
+      ports:
+      - 80:80
+
+volumes:
+   pgdb:
+
