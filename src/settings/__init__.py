@@ -41,12 +41,12 @@ ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
     "testserver",
-    "188.166.77.147",
 ]
 
 if PRODUCTION:
     ALLOWED_HOSTS = [
         "188.166.77.147",
+        "la-plateforme-a-caractere-associatif.org",
     ]
 
 # Application definition
