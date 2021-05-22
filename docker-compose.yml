@@ -3,6 +3,8 @@ version: '3.9'
 networks:
   intern:
     external: false
+  extern:
+    external: true
 
 services:
   web:
@@ -37,8 +39,12 @@ services:
       - web
       networks:
       - intern
-      ports:
-      - 80:80
+      - extern
+      labels:
+        - traefik.http.routers.myrouter.rule=Host(`la-plateforme-a-caractere-associatif.org`)
+        - traefik.http.routers.myrouter.tls=true
+        - traefik.http.routers.myrouter.tls.certresolver=lets-encrypt
+        - traefik.port=80
 
 volumes:
    pgdb:
