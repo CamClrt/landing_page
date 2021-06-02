@@ -9,11 +9,18 @@ a CI-CD pipeline with tools like Docker, GitActions &co
 
 * Python 3
 * Django
+* PostgreSQL
 * Love 💙
 
 ## Deployment
 
-* DigitalOcean: [](la-plateforme-a-caractere-associatif.org) #WIP  
+* DigitalOcean  
+* Docker
+* NGINX
+* Traefik
+* DigitalOcean  
+
+Link 👉 [la-plateforme-a-caractere-associatif.org](https://la-plateforme-a-caractere-associatif.org/) 
 
 ## Versions
 
