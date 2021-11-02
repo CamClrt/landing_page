@@ -1,15 +1,10 @@
 """Centralize the application urls"""
 
 from django.urls import path
-
-from . import views
+from .views import Index
 
 app_name = "landing_page"
 
 urlpatterns = [
-    path(
-        "",
-        views.index,
-        name="index",
-    ),
+    path("", Index.as_view(), name="index"),
 ]

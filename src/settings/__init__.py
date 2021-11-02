@@ -34,7 +34,7 @@ PRODUCTION = os.environ.get("PRODUCTION")
 
 DEBUG = False if PRODUCTION else True
 
-ALLOWED_HOSTS = ["la-plateforme-a-caractere-associatif.org", ] if PRODUCTION else ["localhost", "testserver", ]
+ALLOWED_HOSTS = ["la-plateforme-a-caractere-associatif.org", ] if PRODUCTION else ["localhost", "testserver", "127.0.0.1"]
 
 # Application definition
 

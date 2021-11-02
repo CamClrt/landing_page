@@ -1,50 +1,42 @@
 import os
 
 from django.contrib import messages
-from django.core.mail import send_mail
-from django.shortcuts import render
-
+from django.shortcuts import render, redirect
+from django.views.generic.base import View
 from landing_page.api import check_captcha
+from landing_page.email import record_email
+
+from .models import Prospect
 
 
-def index(request):
-    if request.method == "POST":
+class Index(View):
+    def get(self, request):
+        return render(request, "landing_page/index.html")
+
+    def post(self, request):
         captcha = request.POST.get("g-recaptcha-response")
 
         if captcha:
-            code, r = check_captcha(
-                os.environ.get("GOOGLE"),
-                captcha,
-            )
+            code, r = check_captcha(os.environ.get("GOOGLE"), captcha)
 
             if code == 200 and r["success"]:
                 user_email = request.POST.get("user_email")
 
-                if user_email:
-                    send_mail(
-                        "A new potential user",
-                        user_email,
-                        os.environ.get("EMAIL_CONTACT"),
-                        [os.environ.get("EMAIL_USER")],
-                        fail_silently=True,
-                    )
-                    messages.success(
-                        request, "Merci, votre mail a bien été transmis. A bientôt !"
-                    )
-                else:
-                    email_empty = "Attention, il semblerait que votre mail \
-                    n'ait pas été renseigné."
-                    messages.error(request, email_empty)
-            else:
-                api_error = "Il semblerait que notre vérification auprès \
-                    des services de Google ait échouée. Pourriez-vous \
-                    saisir à nouveau votre email ?"
-                messages.error(request, api_error)
-        else:
-            captcha_empty = "Attention, il semblerait que le captcha n'ait \
-                pas été coché. Pour finaliser l'envoie, celui-ci est requis"
-            messages.error(request, captcha_empty)
-    else:
-        messages.info(request, "")
+                if Prospect.objects.filter(email=user_email):
+                    error_msg = "Attention, il semblerait que votre mail soit déjà enregistré."
+                    messages.error(request, error_msg)
 
-    return render(request, "landing_page/index.html")
+                else:
+                    if user_email:
+                        record_email(request, user_email)
+                        return redirect("landing_page:index")
+
+                    else:
+                        error_msg = "Attention, votre mail n'a pas été renseigné !"
+            else:
+                error_msg = "Attention, la vérification a échoué !"
+        else:
+            error_msg = "Attention, le captcha est requis !"
+
+        messages.error(request, error_msg)
+        return redirect("landing_page:index")
