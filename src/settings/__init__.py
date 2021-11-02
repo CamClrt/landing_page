@@ -32,22 +32,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 PRODUCTION = os.environ.get("PRODUCTION")
 
-DEBUG = True
+DEBUG = False if PRODUCTION else DEBUG = True
 
-if PRODUCTION:
-    DEBUG = False
-
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "testserver",
-]
-
-if PRODUCTION:
-    ALLOWED_HOSTS = [
-        "188.166.77.147",
-        "la-plateforme-a-caractere-associatif.org",
-    ]
+ALLOWED_HOSTS = ["la-plateforme-a-caractere-associatif.org", ] if PRODUCTION else ALLOWED_HOSTS = [ "localhost", "127.0.0.1", "testserver", ]
 
 # Application definition
 
@@ -91,7 +78,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "src.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -103,22 +89,9 @@ DATABASES = {
         "PASSWORD": os.environ.get("PASSWORD"),
         "HOST": os.environ.get("HOST"),
         "PORT": os.environ.get("PORT"),
+        "ATOMIC_REQUESTS": True,
     }
 }
-
-if PRODUCTION:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": "postgres",
-            "USER": "postgres",
-            "PASSWORD": "mypassword",
-            "HOST": "db",
-            "PORT": 5432,
-            "ATOMIC_REQUESTS": True,
-        }
-    }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
