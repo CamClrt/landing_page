@@ -24,8 +24,8 @@ def index(request):
                     send_mail(
                         "A new potential user",
                         user_email,
-                        "contact@la-plateforme-a-caractere-associatif.fr",
-                        ["camille.clarret@gmail.com"],
+                        os.environ.get("EMAIL_CONTACT"),
+                        [os.environ.get("EMAIL_USER")],
                         fail_silently=True,
                     )
                     messages.success(
