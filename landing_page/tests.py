@@ -1,7 +1,7 @@
 from django.test import Client, TestCase
 from django.urls import reverse
 
-from landing_page.api import check_captcha
+from .api import check_captcha
 from unittest.mock import patch
 
 
@@ -22,7 +22,7 @@ class TestProductsView(TestCase):
             reverse("landing_page:index"),
             data=data,
         )
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
 
 class MockResponse:

@@ -153,3 +153,20 @@ if PRODUCTION:
         # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True,
     )
+
+################################ IF GITHUB ACTIONS ################################
+
+if os.environ.get("GITHUB_WORKFLOW"):
+    SECRET_KEY = "my_secret_key"
+
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": "postgres",
+            "USER": "postgres",
+            "PASSWORD": "postgres",
+            "HOST": "127.0.0.1",
+            "PORT": "5432",
+            "ATOMIC_REQUESTS": False,
+        }
+    }
