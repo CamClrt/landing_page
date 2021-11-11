@@ -1,0 +1,23 @@
+[run]
+source = .
+omit =
+    manage.py
+    *urls.py
+    *__init__.py*
+    src/*
+    *migrations*
+    *admin*
+    *apps*
+    *tests*
+
+[report]
+source = .
+omit =
+    manage.py
+    *urls.py
+    *__init__.py*
+    src/*
+    *migrations*
+    *admin*
+    *apps*
+    *tests*
