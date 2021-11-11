@@ -43,3 +43,6 @@ class TestApi(TestCase):
     def test_post(self, mocked):
         _, response = check_captcha("fake_secret", "fake_captcha")
         self.assertEqual(response["success"], True)
+
+
+#TODO: test send_and_record_email() ok + 2 exceptions

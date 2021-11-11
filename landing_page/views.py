@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.views.generic.base import View
 from .api import check_captcha
-from .email import record_email
+from .email import send_and_record_email
 
 from .models import Prospect
 
@@ -23,18 +23,18 @@ class Index(View):
                 user_email = request.POST.get("user_email")
 
                 if Prospect.objects.filter(email=user_email):
-                    error_msg = "Attention, il semblerait que votre mail soit déjà enregistré."
+                    error_msg = "Il semblerait que l'on se connaisse déjà !"
                 else:
-                    if user_email:
-                        record_email(request, user_email)
+                    if user_email and send_and_record_email(request, user_email):
+                        messages.success(request, "Votre mail a bien été enregistré, merci :)")
                         return redirect("landing_page:index")
 
                     else:
-                        error_msg = "Attention, votre mail n'a pas été renseigné !"
+                        error_msg = "Attention, une erreur est survenue !"
             else:
-                error_msg = "Attention, la vérification a échoué !"
+                error_msg = "Mince, la vérification a échoué !"
         else:
-            error_msg = "Attention, le captcha est requis !"
+            error_msg = "Oups, n'oubliez pas le captcha !"
 
         messages.error(request, error_msg)
         return redirect("landing_page:index")
