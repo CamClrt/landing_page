@@ -1,0 +1,22 @@
+pull_request_rules:
+  - name: Cam's automatic merge
+    conditions:
+      - author=CamClrt
+      - check-success=continious-integration
+      - base=main
+      - label!=work-in-progress
+    actions:
+      merge:
+        method: rebase
+      delete_head_branch:
+        force: True
+
+  - name:Automatic merge for Dependabot pull requests
+    conditions:
+      - author~=^dependabot(|-preview)\[bot\]
+      - check-success=continious-integration
+    actions:
+      merge:
+        method: merge
+    delete_head_branch:
+        force: True
