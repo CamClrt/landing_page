@@ -3,7 +3,7 @@ pull_request_rules:
     conditions:
       - author=CamClrt
       - check-success=continious-integration
-      - base=dev
+      - base=main
       - label!=work-in-progress
     actions:
       merge:
