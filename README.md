@@ -10,8 +10,6 @@ A landing page to introduce my future side project.
 * PostgreSQL
 * Love 💙
 
-Link 👉 [la-plateforme-a-caractere-associatif.org](https://la-plateforme-a-caractere-associatif.org/) 
-
 ## Versions
 
 Started in:   May 2021  
